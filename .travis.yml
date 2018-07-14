@@ -1,0 +1,6 @@
+language: c
+sudo: false
+script:
+  - gcc get_next_line.c -o get_next_line
+  - ./get_next_line
+
