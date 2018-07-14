@@ -5,6 +5,7 @@ script:
   - make
   - make clean
   - cd ..
-  - gcc -Wall -Wextra -Werror libft/libft.a get_next_line.c -o get_next_line 
+  - gcc -Wall -Wextra -I get_next_line.h -c get_next_line.c
+  - gcc -o get_next_line get_next_line.o libft/libft.a
   - ./get_next_line
 
