@@ -1,12 +1,11 @@
 language: c
+
 sudo: false
+
 before_install:
   - pip install --user cpp-coveralls
+
 script:
-  - cd libft/
-  - make
-  - make clean
-  - cd ..
   - make
   - make test
   - make clean
