@@ -1,15 +1,15 @@
 language: c
+
+compiler:
+  - gcc
+
 sudo: false
+
 before_install:
   - pip install --user cpp-coveralls
+
 script:
-  - cd libft/
-  - make
-  - make clean
-  - cd ..
-  - make
-  - make test
-  - make clean
+  - make && make test
 
 after_success:
   - coveralls --exclude libft --exclude tests --gcov-options '\-lp'

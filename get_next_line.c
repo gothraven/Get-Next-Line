@@ -1,43 +1,64 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: szaghban <szaghban@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/07/22 19:50:16 by szaghban          #+#    #+#             */
+/*   Updated: 2018/07/22 23:15:17 by szaghban         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
+#include <stdio.h>
 
 
-// int	ft_read_next_line(static Gnl_t gnl, char **line)
-// {
-// 	if (gnl.buffer[0] == 0)
-
-
-// 	return ();
-// }
-
-
-int	get_next_line(const int fd, char **line)
+t_gnl	*ft_fetch_or_create(t_gnl	*list, int	fd)
 {
-	(void)fd;
-	(void)line;
-	// static Gnl_t gnl[FD_MAX_NUMBER] = NULL;
-	// int i;
+	t_gnl	*node = list;
 
-	// if (fd < 0 || read(fd, NULL, 0) == -1 || line == NULL || *line == NULL)
-	// 	return EXIT_ERROR;
-	// i = -1;
-	// if (gnl == NULL)
-	// {
-	// 	while (++i < FD_MAX_NUMBER)
-	// 	{
-	// 		gnl[i].buffer[0] = 0;
-	// 		gnl[i].tmp = NULL;
-	// 		gnl[i].fd = -1;
-	// 	}
-	// 	i = 0; 
-	// }
-	// else
-	// {
-	// 	while (gnl[++i].fd != -1)
-	// 		if (gnl[++i].fd == fd)
-	// 			break
-	// }
-	// gnl[i].fd = fd;	
-	// return ft_read_next_line(gnl[i], line);
-	return (EXIT_SUCCUESS);
+	if (node == NULL) {
+		SECURE((list = (t_gnl*)malloc(sizeof(t_gnl))));
+		list->fd = fd;
+		list->bindex = 0;
+		return (list);
+	}
+	while (node != NULL && node->fd != fd) {
+		if (node->next == NULL) {
+			SECURE((node->next = (t_gnl*)malloc(sizeof(t_gnl))));
+			node->next->fd = fd;
+			list->bindex = 0;
+			return (node->next);
+		}
+		node = node->next;
+	}
+	if (node != NULL && node->fd == fd)
+		return node;
+	return (NULL);
 }
 
+
+int	get_next_line(const int	fd, char	**line)
+{
+	static t_gnl	*list = NULL;
+	t_gnl			*curr;
+	int				ret;
+
+	HANDEL_ERROR(fd, read(fd, NULL, 0), line);
+	CHECK((curr = ft_fetch_or_create(list, fd)));
+	while ((ret = read(fd, curr->buffer, BUFF_SIZE)) >= 0) {
+		SECURE((*line = (char*)malloc(BUFF_SIZE * sizeof(char))));
+		ft_strcpy(*line, curr->buffer);
+		curr->bindex += ret;
+		ft_strchr(curr->buffer, '\n');
+		
+		printf("%d\n", curr->bindex);
+		printf("%s\n", curr->buffer);
+		printf("%s\n", *line);
+		return (EXIT_END);
+	}
+	IS_END(ret);
+	IS_ERROR(ret);
+	return (EXIT_SUCCUESS);
+}
