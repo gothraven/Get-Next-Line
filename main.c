@@ -29,7 +29,6 @@ int	main(int argc, char **argv)
     while ((ret = get_next_line(fd, &line)) == EXIT_SUCCUESS)
     {
         ft_putstr(line);
-        free(*line);
     }
     if (argc == 2)
         close(fd);

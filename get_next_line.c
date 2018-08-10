@@ -56,6 +56,7 @@ int	get_next_line(const int	fd, char	**line)
 		printf("%d\n", curr->bindex);
 		printf("%s\n", curr->buffer);
 		printf("%s\n", *line);
+		return (EXIT_END);
 	}
 	IS_END(ret);
 	IS_ERROR(ret);

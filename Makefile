@@ -5,10 +5,9 @@ LDFLAGS = -fprofile-arcs -I libft/includes -L libft/ -lft
 SRC = get_next_line.c main.c
 OBJ = ${SRC:.c=.o}
 
-.PHONY: default clean test
+.PHONY: default clib clean test
 
-#default: clib ${EXEC}
-default: ${EXEC}
+default: clib ${EXEC}
 
 get_next_line.o: get_next_line.c get_next_line.h
 main.o: main.c get_next_line.h
@@ -29,6 +28,7 @@ clean:
 	find . -iname '*.gcov' -delete
 	find . -iname '*.gcno' -delete
 	rm -f ${EXEC}
+	make -C libft/ fclean
 
 test:
-	./${EXEC}
+	./${EXEC} Makefile

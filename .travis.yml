@@ -1,14 +1,15 @@
 language: c
 
+compiler:
+  - gcc
+
 sudo: false
 
 before_install:
   - pip install --user cpp-coveralls
 
 script:
-  - make
-  - make test
-  - make clean
+  - make && make test && make clean
 
 after_success:
   - coveralls --exclude libft --exclude tests --gcov-options '\-lp'
