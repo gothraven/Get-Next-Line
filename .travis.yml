@@ -9,7 +9,7 @@ before_install:
   - pip install --user cpp-coveralls
 
 script:
-  - make && make test
+  - /bin/bash ~/Get-Next-Line/tests/42FileChecker.sh --project "gnl" --path ~/Get-Next-Line --no-norminette --no-update
 
 after_success:
   - coveralls --exclude libft --exclude tests --gcov-options '\-lp'
