@@ -22,4 +22,3 @@ script:
 
 after_success:
   - coveralls --exclude libft --exclude tests --gcov-options '\-lp'
-  - make fclean
