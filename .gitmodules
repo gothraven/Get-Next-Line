@@ -1,3 +1,7 @@
 [submodule "tests"]
 	path = tests
 	url = https://github.com/jgigault/42FileChecker.git
+
+[submodule "libft"]
+	path = libft
+	url = https://github.com/gothraven/Libft.git
