@@ -21,16 +21,19 @@
 # define BUFF_SIZE 42
 # define FD_MAX_NUMBER 10
 # define SECURE(x) if (!x) return(0x0);
+# define HANDEL_ERROR(x, y, z, k) if (x < 0 || y == -1 || z == NULL || k < 1) return (EXIT_ERROR)
+# define SWAP_FREE(x, y, z) x = y; y = z; free(x);
+# define NL_INDEX (nlc - buffer)
+
 # define IS_ERROR(x) if (x == EXIT_ERROR) return(EXIT_ERROR)
 # define IS_END(x) if (x == EXIT_END) return(EXIT_END)
 # define CHECK(x) if (!x) return(EXIT_ERROR);
-# define HANDEL_ERROR(x, y, z) if (x < 0 || y == -1 || z == NULL) return (EXIT_ERROR)
+
 
 typedef struct		s_gnl
 {
-	char			buffer[BUFF_SIZE];
-	int				bindex;
-	int				fd;
+    int             fd;
+ 	char			*buffer;
 	struct s_gnl	*next;
 }					t_gnl;
 
